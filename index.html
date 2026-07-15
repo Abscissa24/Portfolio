@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Armiel — Portfolio</title>
+    <style>
+        :root {
+            --bg: #0b0b10;
+            --surface: #14141b;
+            --surface-hover: #1a1a24;
+            --text: #e4e1dc;
+            --text-muted: #8b8880;
+            --accent: #c8a87c;
+            --accent-subtle: #c8a87c18;
+            --border: rgba(255, 255, 255, 0.06);
+            --radius: 12px;
+            --radius-lg: 20px;
+            --transition: 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            --font-sans: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-serif: 'Georgia', 'Times New Roman', serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-sans);
+            line-height: 1.7;
+            overflow-x: hidden;
+            letter-spacing: 0.01em;
+        }
+
+        /* Subtle grain overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.035;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* ── Utility ── */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .section {
+            padding: 6rem 0;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 4rem 0;
+        }
+        .hero .container {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .hero-text {
+            flex: 1 1 380px;
+            z-index: 2;
+        }
+        .hero-greeting {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--accent);
+            margin-bottom: 0.6rem;
+            font-weight: 500;
+            animation: fadeSlideUp 0.8s ease forwards;
+        }
+        .hero-name {
+            font-family: var(--font-serif);
+            font-size: clamp(3.2rem, 7vw, 5.5rem);
+            font-weight: 400;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.8rem;
+            animation: fadeSlideUp 0.8s 0.1s ease forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        .hero-name span {
+            color: var(--accent);
+        }
+        .hero-bio {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 560px;
+            line-height: 1.8;
+            animation: fadeSlideUp 0.8s 0.25s ease forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        .hero-bio strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+        .hero-portrait {
+            flex: 0 0 280px;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            position: relative;
+            animation: fadeSlideUp 0.8s 0.35s ease forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-portrait-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 40%, #1e1e2a 0%, #0f0f18 70%);
+            mask-image: radial-gradient(circle at center, black 55%, transparent 82%);
+            -webkit-mask-image: radial-gradient(circle at center, black 55%, transparent 82%);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        /* Portrait placeholder — replace with actual img tag */
+        .hero-portrait-placeholder {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            opacity: 0.5;
+            filter: grayscale(30%);
+            transition: opacity 0.6s ease;
+        }
+        /* Subtle glow ring */
+        .hero-portrait::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: conic-gradient(from 180deg, transparent, var(--accent-subtle), transparent, var(--accent-subtle), transparent);
+            opacity: 0.5;
+            animation: rotateGlow 14s linear infinite;
+            z-index: -1;
+        }
+        @keyframes rotateGlow {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            animation: fadeSlideUp 1s 0.7s ease forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        .scroll-indicator span {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+        }
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--text-muted), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+        @keyframes scrollPulse {
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scaleY(0.6);
+            }
+            50% {
+                opacity: 1;
+                transform: scaleY(1);
+            }
+        }
+
+        /* ── Section Headers ── */
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .section-tag {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+        }
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        /* ── Work Grid ── */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        .work-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+            position: relative;
+            cursor: default;
+        }
+        .work-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.14);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--accent-subtle) inset;
+        }
+        .work-media {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background: #0d0d15;
+            position: relative;
+            overflow: hidden;
+        }
+        .work-media video,
+        .work-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        .work-card:hover .work-media video,
+        .work-card:hover .work-media img {
+            transform: scale(1.03);
+        }
+        .work-media video {
+            background: #0d0d15;
+        }
+        .work-info {
+            padding: 1.3rem 1.5rem;
+        }
+        .work-info h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.01em;
+        }
+        .work-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .work-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            background: var(--accent-subtle);
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            margin-bottom: 0.6rem;
+        }
+
+        /* ── Contact ── */
+        .contact-section {
+            text-align: center;
+            padding-bottom: 5rem;
+        }
+        .contact-note {
+            color: var(--text-muted);
+            max-width: 540px;
+            margin: 0 auto 2.5rem;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+        .contact-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+        }
+        .contact-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            transition: all var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text);
+            position: relative;
+        }
+        .contact-icon:hover {
+            border-color: var(--accent);
+            background: var(--surface-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 0 4px var(--accent-subtle);
+            color: var(--accent);
+        }
+        .contact-icon svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+        .contact-icon:hover svg {
+            transform: scale(1.1);
+        }
+        .contact-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+            transition: color 0.3s ease;
+        }
+        .contact-icon-wrapper:hover .contact-label {
+            color: var(--accent);
+        }
+        .contact-icon-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+            text-decoration: none;
+        }
+
+        /* ── Footer ── */
+        .footer-line {
+            width: 40px;
+            height: 1px;
+            background: var(--border);
+            margin: 0 auto 1.5rem;
+        }
+        .footer-credit {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding-bottom: 2rem;
+            letter-spacing: 0.04em;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .hero .container {
+                flex-direction: column-reverse;
+                gap: 2rem;
+                text-align: center;
+            }
+            .hero-portrait {
+                flex: 0 0 180px;
+                width: 180px;
+                height: 180px;
+            }
+            .hero-bio {
+                max-width: 100%;
+                font-size: 0.9rem;
+            }
+            .hero-name {
+                font-size: 2.6rem;
+            }
+            .section {
+                padding: 4rem 0;
+            }
+            .work-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .contact-icons {
+                gap: 1rem;
+            }
+            .contact-icon {
+                width: 44px;
+                height: 44px;
+            }
+            .contact-icon svg {
+                width: 17px;
+                height: 17px;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1.2rem;
+            }
+            .hero-portrait {
+                flex: 0 0 140px;
+                width: 140px;
+                height: 140px;
+            }
+            .hero-name {
+                font-size: 2.2rem;
+            }
+            .hero-bio {
+                font-size: 0.82rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-text">
+                <p class="hero-greeting">Hi, I'm</p>
+                <h1 class="hero-name">Armiel<span>.</span></h1>
+                <p class="hero-bio">
+                    Final-year <strong>Applied Mathematics and Computer Science</strong> student,
+                    open-source engineer, and research assistant to
+                    <strong>Dr. Yusuf Tjani</strong> (PhD in Applied Mathematics)
+                    at the <strong>University of the Witwatersrand</strong>.
+                    I serve as the <strong>Digital Director</strong> for the
+                    <strong>Qhakaza Sports Foundation</strong> (NPO), partnering with
+                    ex-professional rugby player <strong>Gromingo Mzunga</strong>.
+                    I have engineered open-source projects from scratch, deploying software
+                    across Southern African schools and building platforms that scale to
+                    international users. In my free time, I tutor high school mathematics
+                    and serve as the UGU region's <strong>Head Chess Coach</strong>, backed
+                    by a <strong>2200 chess rating</strong>. Grounded by 17 years of
+                    discipline in martial arts and training as an intermediate calisthenics
+                    athlete, I am looking for an opportunity to scale my career and leverage
+                    my technical talents effectively.
+                </p>
+            </div>
+            <div class="hero-portrait">
+                <div class="hero-portrait-inner">
+                    <!--
+                    ═══════════════════════════════════════════
+                    REPLACE the div below with your portrait:
+                    <img class="hero-portrait-placeholder"
+                    src="assets/images/portrait.jpg"
+                    alt="Armiel"
+                    style="opacity:1; filter:none;">
+                    ═══════════════════════════════════════════
+                    -->
+                    <div class="hero-portrait-placeholder" style="
+                    background: radial-gradient(ellipse at 50% 35%, #2a2a38 0%, #0d0d18 100%);
+                "></div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+    </div>
+</section>
+
+<!-- ═══════════════ WORK ═══════════════════ -->
+<section class="section" id="work">
+    <div class="container">
+        <div class="section-header reveal">
+            <p class="section-tag">Selected Work</p>
+            <h2 class="section-title">Here's some of my work</h2>
+        </div>
+        <div class="work-grid">
+
+            <!-- Project 1 — Video -->
+            <div class="work-card reveal">
+                <div class="work-media">
+                    <!--
+                    Replace src with your video path in the repo, e.g.:
+                    src="assets/media/schools-platform.mp4"
+                    -->
+                    <video
+                    src="assets/media/project-1.mp4"
+                    autoplay
+                    loop
+                    muted
+                    playsinline
+                    preload="metadata"
+                    poster="assets/media/project-1-poster.jpg"
+                ></video>
+            </div>
+            <div class="work-info">
+                <span class="work-tag">Open Source</span>
+                <h3>School Deployment Platform</h3>
+                <p>Engineered from scratch and deployed across Southern African schools.</p>
+            </div>
+        </div>
+
+        <!-- Project 2 — Image -->
+        <div class="work-card reveal">
+            <div class="work-media">
+                <!-- Replace src with your image path -->
+                <img
+                src="assets/media/project-2.jpg"
+                alt="International Platform"
+                loading="lazy"
+            />
+        </div>
+        <div class="work-info">
+            <span class="work-tag">Scalable</span>
+            <h3>International User Platform</h3>
+            <p>Built to scale seamlessly to users across multiple countries.</p>
+        </div>
+    </div>
+
+    <!-- Project 3 — Video -->
+    <div class="work-card reveal">
+        <div class="work-media">
+            <video
+            src="assets/media/project-3.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+            preload="metadata"
+            poster="assets/media/project-3-poster.jpg"
+        ></video>
+    </div>
+    <div class="work-info">
+        <span class="work-tag">NPO</span>
+        <h3>Qhakaza Sports Foundation</h3>
+        <p>Digital infrastructure for the foundation, in partnership with Gromingo Mzunga.</p>
+    </div>
+</div>
+
+<!-- Project 4 — Image -->
+<div class="work-card reveal">
+    <div class="work-media">
+        <img
+        src="assets/media/project-4.jpg"
+        alt="Research Tool"
+        loading="lazy"
+    />
+</div>
+<div class="work-info">
+    <span class="work-tag">Research</span>
+    <h3>Applied Mathematics Tooling</h3>
+    <p>Research assistant tools developed under Dr. Yusuf Tjani's guidance.</p>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- ═══════════════ CONTACT ═══════════════ -->
+<section class="section contact-section" id="contact">
+    <div class="container">
+        <div class="section-header reveal">
+            <p class="section-tag">Get In Touch</p>
+            <h2 class="section-title">How to reach out?</h2>
+        </div>
+        <p class="contact-note reveal">
+            I choose to skip the noise of mainstream social media like Instagram,
+            TikTok, Snapchat or Facebook. My time is dedicated entirely to my work,
+            continuous self-improvement, and building real-world connections.
+            I limit my digital presence to YouTube for multimedia consumption
+            and WhatsApp strictly for essential communication.
+            <br /><br />
+            You can reach out to me through any of the following channels:
+        </p>
+        <div class="contact-icons reveal">
+            <!-- WhatsApp -->
+            <a href="https://wa.me/YOUR_PHONE_NUMBER" target="_blank" rel="noopener"
+            class="contact-icon-wrapper" title="WhatsApp">
+            <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+            </svg>
+        </div>
+        <span class="contact-label">WhatsApp</span>
+    </a>
+
+    <!-- Email -->
+    <a href="mailto:your.email@example.com" class="contact-icon-wrapper" title="Email">
+        <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="m22 4-10 8L2 4" />
+        </svg>
+    </div>
+    <span class="contact-label">Email</span>
+</a>
+
+<!-- GitHub -->
+<a href="https://github.com/YOUR_USERNAME" target="_blank" rel="noopener"
+class="contact-icon-wrapper" title="GitHub">
+<div class="contact-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+    <path d="M9 18c-4.51 2-5-2-7-2" />
+</svg>
+</div>
+<span class="contact-label">GitHub</span>
+</a>
+
+<!-- LinkedIn -->
+<a href="https://linkedin.com/in/YOUR_USERNAME" target="_blank" rel="noopener"
+class="contact-icon-wrapper" title="LinkedIn">
+<div class="contact-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+    stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="6" width="20" height="16" rx="2" />
+    <path d="M8 11v6M8 8v.01M12 17v-4.5a2 2 0 1 0-4 0V17" />
+    <path d="M16 17v-4.5a3 3 0 1 0-6 0" />
+</svg>
+</div>
+<span class="contact-label">LinkedIn</span>
+</a>
+</div>
+</div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<div class="footer-line"></div>
+<p class="footer-credit">© <span id="year"></span> Armiel. Built with discipline.</p>
+
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
+<script>
+    // ── Set current year ──
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ── Intersection Observer: Scroll reveals ──
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // ── Intersection Observer: Play/pause videos on scroll ──
+    const videos = document.querySelectorAll('.work-media video');
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const video = entry.target;
+            if (entry.isIntersecting) {
+                video.play().catch(() => {});
+            } else {
+                video.pause();
+            }
+        });
+    }, { threshold: 0.3 });
+    videos.forEach(video => videoObserver.observe(video));
+
+    // ── Ensure videos attempt autoplay on load ──
+    videos.forEach(video => {
+        video.play().catch(() => {});
+    });
+
+    // ── Stagger reveal delays for work cards ──
+    const workCards = document.querySelectorAll('.work-card.reveal');
+    workCards.forEach((card, i) => {
+        card.style.transitionDelay = `${i * 0.08}s`;
+    });
+
+    // ── Parallax subtle shift on hero portrait (desktop only) ──
+    if (window.innerWidth > 768) {
+        const portrait = document.querySelector('.hero-portrait');
+        window.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 14;
+            const y = (e.clientY / window.innerHeight - 0.5) * 14;
+            portrait.style.transform = `translate(${x}px, ${y}px)`;
+            portrait.style.transition = 'transform 0.25s ease-out';
+        });
+    }
+</script>
+</body>
+</html>
