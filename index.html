@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Armiel — Portfolio</title>
+    <title>Armiel - Portfolio</title>
     <style>
         :root {
             --bg: #0b0b10;
@@ -51,7 +51,7 @@
             background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
-        /* ── Utility ── */
+        /* Utility */
         .container {
             max-width: 1100px;
             margin: 0 auto;
@@ -70,7 +70,7 @@
             transform: translateY(0);
         }
 
-        /* ── Hero ── */
+        /* Hero */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -149,7 +149,6 @@
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        /* Portrait placeholder — replace with actual img tag */
         .hero-portrait-placeholder {
             width: 100%;
             height: 100%;
@@ -159,7 +158,6 @@
             filter: grayscale(30%);
             transition: opacity 0.6s ease;
         }
-        /* Subtle glow ring */
         .hero-portrait::before {
             content: '';
             position: absolute;
@@ -171,22 +169,13 @@
             z-index: -1;
         }
         @keyframes rotateGlow {
-            to {
-                transform: rotate(360deg);
-            }
+            to { transform: rotate(360deg); }
         }
         @keyframes fadeSlideUp {
-            from {
-                opacity: 0;
-                transform: translateY(24px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Scroll indicator */
         .scroll-indicator {
             position: absolute;
             bottom: 2rem;
@@ -213,18 +202,11 @@
             animation: scrollPulse 2s ease-in-out infinite;
         }
         @keyframes scrollPulse {
-            0%,
-            100% {
-                opacity: 0.3;
-                transform: scaleY(0.6);
-            }
-            50% {
-                opacity: 1;
-                transform: scaleY(1);
-            }
+            0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+            50% { opacity: 1; transform: scaleY(1); }
         }
 
-        /* ── Section Headers ── */
+        /* Section Headers */
         .section-header {
             text-align: center;
             margin-bottom: 4rem;
@@ -244,10 +226,10 @@
             letter-spacing: -0.01em;
         }
 
-        /* ── Work Grid ── */
+        /* Work Grid */
         .work-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
         }
         .work-card {
@@ -256,7 +238,6 @@
             overflow: hidden;
             border: 1px solid var(--border);
             transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
-            position: relative;
             cursor: default;
         }
         .work-card:hover {
@@ -312,7 +293,7 @@
             margin-bottom: 0.6rem;
         }
 
-        /* ── Contact ── */
+        /* Contact */
         .contact-section {
             text-align: center;
             padding-bottom: 5rem;
@@ -343,7 +324,6 @@
             cursor: pointer;
             text-decoration: none;
             color: var(--text);
-            position: relative;
         }
         .contact-icon:hover {
             border-color: var(--accent);
@@ -379,7 +359,6 @@
             text-decoration: none;
         }
 
-        /* ── Footer ── */
         .footer-line {
             width: 40px;
             height: 1px;
@@ -394,7 +373,6 @@
             letter-spacing: 0.04em;
         }
 
-        /* ── Responsive ── */
         @media (max-width: 768px) {
             .hero .container {
                 flex-direction: column-reverse;
@@ -406,47 +384,19 @@
                 width: 180px;
                 height: 180px;
             }
-            .hero-bio {
-                max-width: 100%;
-                font-size: 0.9rem;
-            }
-            .hero-name {
-                font-size: 2.6rem;
-            }
-            .section {
-                padding: 4rem 0;
-            }
-            .work-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            .contact-icons {
-                gap: 1rem;
-            }
-            .contact-icon {
-                width: 44px;
-                height: 44px;
-            }
-            .contact-icon svg {
-                width: 17px;
-                height: 17px;
-            }
+            .hero-bio { max-width: 100%; font-size: 0.9rem; }
+            .hero-name { font-size: 2.6rem; }
+            .section { padding: 4rem 0; }
+            .work-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .contact-icons { gap: 1rem; }
+            .contact-icon { width: 44px; height: 44px; }
+            .contact-icon svg { width: 17px; height: 17px; }
         }
         @media (max-width: 480px) {
-            .container {
-                padding: 0 1.2rem;
-            }
-            .hero-portrait {
-                flex: 0 0 140px;
-                width: 140px;
-                height: 140px;
-            }
-            .hero-name {
-                font-size: 2.2rem;
-            }
-            .hero-bio {
-                font-size: 0.82rem;
-            }
+            .container { padding: 0 1.2rem; }
+            .hero-portrait { flex: 0 0 140px; width: 140px; height: 140px; }
+            .hero-name { font-size: 2.2rem; }
+            .hero-bio { font-size: 0.82rem; }
         }
     </style>
 </head>
@@ -455,11 +405,17 @@
     <!-- ═══════════════ HERO ═══════════════ -->
     <section class="hero">
         <div class="container">
-            <div class="hero-text">
+            <div class="hero-text">PROTOTYPE_V1.1
                 <p class="hero-greeting">Hi, I'm</p>
                 <h1 class="hero-name">Armiel<span>.</span></h1>
+                
+                               CV_EXTRACT:
+                               
+                               
                 <p class="hero-bio">
-                    Final-year <strong>Applied Mathematics and Computer Science</strong> student,
+     
+
+Final-year <strong>Applied Mathematics and Computer Science</strong> student,
                     open-source engineer, and research assistant to
                     <strong>Dr. Yusuf Tjani</strong> (PhD in Applied Mathematics)
                     at the <strong>University of the Witwatersrand</strong>.
@@ -474,247 +430,269 @@
                     discipline in martial arts and training as an intermediate calisthenics
                     athlete, I am looking for an opportunity to scale my career and leverage
                     my technical talents effectively.
+
                 </p>
+                Placeholder_Portrait =  I am just putting this here for now, will replace with an actual portrait of me. Will ask Tyra to take one.
+
             </div>
             <div class="hero-portrait">
                 <div class="hero-portrait-inner">
                     <!--
-                    ═══════════════════════════════════════════
-                    REPLACE the div below with your portrait:
+                    Replace this div with your portrait image:
                     <img class="hero-portrait-placeholder"
-                    src="assets/images/portrait.jpg"
-                    alt="Armiel"
-                    style="opacity:1; filter:none;">
-                    ═══════════════════════════════════════════
+                         src="assets/images/portrait.jpg"
+                         alt="Armiel"
+                         style="opacity:1; filter:none;">
                     -->
                     <div class="hero-portrait-placeholder" style="
-                    background: radial-gradient(ellipse at 50% 35%, #2a2a38 0%, #0d0d18 100%);
-                "></div>
+                        background: radial-gradient(ellipse at 50% 35%, #2a2a38 0%, #0d0d18 100%);
+                    "></div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="scroll-indicator">
-        <span>Scroll</span>
-        <div class="scroll-line"></div>
-    </div>
-</section>
-
-<!-- ═══════════════ WORK ═══════════════════ -->
-<section class="section" id="work">
-    <div class="container">
-        <div class="section-header reveal">
-            <p class="section-tag">Selected Work</p>
-            <h2 class="section-title">Here's some of my work</h2>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
         </div>
-        <div class="work-grid">
+    </section>
 
-            <!-- Project 1 — Video -->
-            <div class="work-card reveal">
-                <div class="work-media">
-                    <!--
-                    Replace src with your video path in the repo, e.g.:
-                    src="assets/media/schools-platform.mp4"
-                    -->
-                    <video
-                    src="assets/media/project-1.mp4"
-                    autoplay
-                    loop
-                    muted
-                    playsinline
-                    preload="metadata"
-                    poster="assets/media/project-1-poster.jpg"
-                ></video>
+    <!-- ═══════════════ WORK ═══════════════ -->
+    <section class="section" id="work">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-tag">Selected Work</p>
+                <h2 class="section-title">Here's some of my work</h2>
             </div>
-            <div class="work-info">
-                <span class="work-tag">Open Source</span>
-                <h3>School Deployment Platform</h3>
-                <p>Engineered from scratch and deployed across Southern African schools.</p>
+            <div class="work-grid">
+
+                <!-- AxOS -->
+                <div class="work-card reveal">
+                    <div class="work-media">
+                        <!-- Replace with your video or image: assets/media/axos.mp4 / axos.jpg -->
+                        <video src="assets/media/axos.mp4" autoplay loop muted playsinline preload="metadata"
+                               poster="assets/media/axos-poster.jpg"></video>
+                    </div>
+                    <div class="work-info">
+                        <span class="work-tag">Linux OS</span>
+                        <h3>AxOS</h3>
+                        <p>A Linux-based operating system scaled to international users.</p>
+                    </div>
+                </div>
+
+                <!-- Remuneration Tracker -->
+                <div class="work-card reveal">
+                    <div class="work-media">
+                        <img src="assets/media/remuneration-tracker.jpg" alt="Remuneration Tracker" loading="lazy">
+                    </div>
+                    <div class="work-info">
+                        <span class="work-tag">Finance</span>
+                        <h3>Remuneration Tracker</h3>
+                        <p>Entrepreneurs across South Africa use this tool daily.</p>
+                    </div>
+                </div>
+
+                <!-- Chess Coach Utility -->
+                <div class="work-card reveal">
+                    <div class="work-media">
+                        <video src="assets/media/chess-coach-utility.mp4" autoplay loop muted playsinline preload="metadata"
+                               poster="assets/media/chess-utility-poster.jpg"></video>
+                    </div>
+                    <div class="work-info">
+                        <span class="work-tag">Chess</span>
+                        <h3>Chess Coach Utility</h3>
+                        <p>Used by chess coaches and organizers across Southern Africa.</p>
+                    </div>
+                </div>
+
+                <!-- Digital Director Qhakaza -->
+                <div class="work-card reveal">
+                    <div class="work-media">
+                        <img src="assets/media/qhakaza-foundation.jpg" alt="Qhakaza Sports Foundation" loading="lazy">
+                    </div>
+                    <div class="work-info">
+                        <span class="work-tag">NPO</span>
+                        <h3>Digital Director – Qhakaza Sports Foundation</h3>
+                        <p>Leading digital strategy for the foundation alongside Gromingo Mzunga.</p>
+                    </div>
+                </div>
+
+                <!-- Tyrartsy Marketplace -->
+                <div class="work-card reveal">
+                    <div class="work-media">
+                        <video src="assets/media/tyrartsy.mp4" autoplay loop muted playsinline preload="metadata"
+                               poster="assets/media/tyrartsy-poster.jpg"></video>
+                    </div>
+                    <div class="work-info">
+                        <span class="work-tag">Marketplace</span>
+                        <h3>Tyrartsy Marketplace</h3>
+                        <p>Digital marketplace platform connecting independent creators.</p>
+                    </div>
+                </div>
+
+                <!-- The Utilities Project -->
+                <div class="work-card reveal">
+                    <div class="work-media">
+                        <img src="assets/media/utilities-project.jpg" alt="The Utilities Project" loading="lazy">
+                    </div>
+                    <div class="work-info">
+                        <span class="work-tag">Open Source</span>
+                        <h3>The Utilities Project</h3>
+                        <p>Modular open-source utilities built for performance and simplicity.</p>
+                    </div>
+                </div>
+
+                <!-- AP Math Research Assistant -->
+                <div class="work-card reveal">
+                    <div class="work-media">
+                        <video src="assets/media/ap-math-research.mp4" autoplay loop muted playsinline preload="metadata"
+                               poster="assets/media/ap-math-poster.jpg"></video>
+                    </div>
+                    <div class="work-info">
+                        <span class="work-tag">Research</span>
+                        <h3>AP Math Research Assistant</h3>
+                        <p>Tools developed under Dr. Yusuf Tjani for applied mathematics research.</p>
+                    </div>
+                </div>
+
+                <!-- Chess Coach and Arbiter -->
+                <div class="work-card reveal">
+                    <div class="work-media">
+                        <img src="assets/media/chess-coach-arbiter.jpg" alt="Chess Coach and Arbiter" loading="lazy">
+                    </div>
+                    <div class="work-info">
+                        <span class="work-tag">Chess</span>
+                        <h3>Chess Coach and Arbiter</h3>
+                        <p>Coaching players and officiating tournaments with a 2200 rating.</p>
+                    </div>
+                </div>
+
+                <!-- Mathematics Tuition -->
+                <div class="work-card reveal">
+                    <div class="work-media">
+                        <video src="assets/media/math-tuition.mp4" autoplay loop muted playsinline preload="metadata"
+                               poster="assets/media/math-tuition-poster.jpg"></video>
+                    </div>
+                    <div class="work-info">
+                        <span class="work-tag">Education</span>
+                        <h3>Mathematics Tuition</h3>
+                        <p>One-on-one high school mathematics tutoring, building deep understanding.</p>
+                    </div>
+                </div>
+
             </div>
         </div>
+    </section>
 
-        <!-- Project 2 — Image -->
-        <div class="work-card reveal">
-            <div class="work-media">
-                <!-- Replace src with your image path -->
-                <img
-                src="assets/media/project-2.jpg"
-                alt="International Platform"
-                loading="lazy"
-            />
+    <!-- ═══════════════ CONTACT ═══════════════ -->
+    <section class="section contact-section" id="contact">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-tag">Get In Touch</p>
+                <h2 class="section-title">How to reach out?</h2>
+            </div>
+            <p class="contact-note reveal">
+                I choose to skip the noise of mainstream social media like Instagram,
+                TikTok, Snapchat or Facebook. My time is dedicated entirely to my work,
+                continuous self-improvement, and building real-world connections.
+                I limit my digital presence to YouTube for multimedia consumption
+                and WhatsApp strictly for essential communication.
+                <br /><br />
+                You can reach out to me through any of the following channels:
+            </p>
+            <div class="contact-icons reveal">
+                <!-- WhatsApp -->
+                <a href="https://wa.me/YOUR_PHONE_NUMBER" target="_blank" rel="noopener"
+                   class="contact-icon-wrapper" title="WhatsApp">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                        </svg>
+                    </div>
+                    <span class="contact-label">WhatsApp</span>
+                </a>
+
+                <!-- Email -->
+                <a href="mailto:your.email@example.com" class="contact-icon-wrapper" title="Email">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="4" width="20" height="16" rx="2" />
+                            <path d="m22 4-10 8L2 4" />
+                        </svg>
+                    </div>
+                    <span class="contact-label">Email</span>
+                </a>
+
+                <!-- GitHub -->
+                <a href="https://github.com/YOUR_USERNAME" target="_blank" rel="noopener"
+                   class="contact-icon-wrapper" title="GitHub">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                            <path d="M9 18c-4.51 2-5-2-7-2" />
+                        </svg>
+                    </div>
+                    <span class="contact-label">GitHub</span>
+                </a>
+
+                <!-- LinkedIn -->
+                <a href="https://linkedin.com/in/YOUR_USERNAME" target="_blank" rel="noopener"
+                   class="contact-icon-wrapper" title="LinkedIn">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="6" width="20" height="16" rx="2" />
+                            <path d="M8 11v6M8 8v.01M12 17v-4.5a2 2 0 1 0-4 0V17" />
+                            <path d="M16 17v-4.5a3 3 0 1 0-6 0" />
+                        </svg>
+                    </div>
+                    <span class="contact-label">LinkedIn</span>
+                </a>
+            </div>
         </div>
-        <div class="work-info">
-            <span class="work-tag">Scalable</span>
-            <h3>International User Platform</h3>
-            <p>Built to scale seamlessly to users across multiple countries.</p>
-        </div>
-    </div>
+    </section>
 
-    <!-- Project 3 — Video -->
-    <div class="work-card reveal">
-        <div class="work-media">
-            <video
-            src="assets/media/project-3.mp4"
-            autoplay
-            loop
-            muted
-            playsinline
-            preload="metadata"
-            poster="assets/media/project-3-poster.jpg"
-        ></video>
-    </div>
-    <div class="work-info">
-        <span class="work-tag">NPO</span>
-        <h3>Qhakaza Sports Foundation</h3>
-        <p>Digital infrastructure for the foundation, in partnership with Gromingo Mzunga.</p>
-    </div>
-</div>
+    <div class="footer-line"></div>
+    <p class="footer-credit">© <span id="year"></span> Armiel. All rights reserved.</p>
 
-<!-- Project 4 — Image -->
-<div class="work-card reveal">
-    <div class="work-media">
-        <img
-        src="assets/media/project-4.jpg"
-        alt="Research Tool"
-        loading="lazy"
-    />
-</div>
-<div class="work-info">
-    <span class="work-tag">Research</span>
-    <h3>Applied Mathematics Tooling</h3>
-    <p>Research assistant tools developed under Dr. Yusuf Tjani's guidance.</p>
-</div>
-</div>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-</div>
-</div>
-</section>
+        const revealEls = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+        revealEls.forEach(el => revealObserver.observe(el));
 
-<!-- ═══════════════ CONTACT ═══════════════ -->
-<section class="section contact-section" id="contact">
-    <div class="container">
-        <div class="section-header reveal">
-            <p class="section-tag">Get In Touch</p>
-            <h2 class="section-title">How to reach out?</h2>
-        </div>
-        <p class="contact-note reveal">
-            I choose to skip the noise of mainstream social media like Instagram,
-            TikTok, Snapchat or Facebook. My time is dedicated entirely to my work,
-            continuous self-improvement, and building real-world connections.
-            I limit my digital presence to YouTube for multimedia consumption
-            and WhatsApp strictly for essential communication.
-            <br /><br />
-            You can reach out to me through any of the following channels:
-        </p>
-        <div class="contact-icons reveal">
-            <!-- WhatsApp -->
-            <a href="https://wa.me/YOUR_PHONE_NUMBER" target="_blank" rel="noopener"
-            class="contact-icon-wrapper" title="WhatsApp">
-            <div class="contact-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-            </svg>
-        </div>
-        <span class="contact-label">WhatsApp</span>
-    </a>
+        const videos = document.querySelectorAll('.work-media video');
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                if (entry.isIntersecting) video.play().catch(() => {});
+                else video.pause();
+            });
+        }, { threshold: 0.3 });
+        videos.forEach(video => videoObserver.observe(video));
+        videos.forEach(video => video.play().catch(() => {}));
 
-    <!-- Email -->
-    <a href="mailto:your.email@example.com" class="contact-icon-wrapper" title="Email">
-        <div class="contact-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-            stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="2" />
-            <path d="m22 4-10 8L2 4" />
-        </svg>
-    </div>
-    <span class="contact-label">Email</span>
-</a>
-
-<!-- GitHub -->
-<a href="https://github.com/YOUR_USERNAME" target="_blank" rel="noopener"
-class="contact-icon-wrapper" title="GitHub">
-<div class="contact-icon">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-    stroke-linecap="round" stroke-linejoin="round">
-    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-    <path d="M9 18c-4.51 2-5-2-7-2" />
-</svg>
-</div>
-<span class="contact-label">GitHub</span>
-</a>
-
-<!-- LinkedIn -->
-<a href="https://linkedin.com/in/YOUR_USERNAME" target="_blank" rel="noopener"
-class="contact-icon-wrapper" title="LinkedIn">
-<div class="contact-icon">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-    stroke-linecap="round" stroke-linejoin="round">
-    <rect x="2" y="6" width="20" height="16" rx="2" />
-    <path d="M8 11v6M8 8v.01M12 17v-4.5a2 2 0 1 0-4 0V17" />
-    <path d="M16 17v-4.5a3 3 0 1 0-6 0" />
-</svg>
-</div>
-<span class="contact-label">LinkedIn</span>
-</a>
-</div>
-</div>
-</section>
-
-<!-- ═══════════════ FOOTER ═══════════════ -->
-<div class="footer-line"></div>
-<p class="footer-credit">© <span id="year"></span> Armiel. Built with discipline.</p>
-
-<!-- ═══════════════ SCRIPTS ═══════════════ -->
-<script>
-    // ── Set current year ──
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // ── Intersection Observer: Scroll reveals ──
-    const revealEls = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
+        const workCards = document.querySelectorAll('.work-card.reveal');
+        workCards.forEach((card, i) => {
+            card.style.transitionDelay = `${i * 0.06}s`;
         });
-    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
-    revealEls.forEach(el => revealObserver.observe(el));
 
-    // ── Intersection Observer: Play/pause videos on scroll ──
-    const videos = document.querySelectorAll('.work-media video');
-    const videoObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            const video = entry.target;
-            if (entry.isIntersecting) {
-                video.play().catch(() => {});
-            } else {
-                video.pause();
-            }
-        });
-    }, { threshold: 0.3 });
-    videos.forEach(video => videoObserver.observe(video));
-
-    // ── Ensure videos attempt autoplay on load ──
-    videos.forEach(video => {
-        video.play().catch(() => {});
-    });
-
-    // ── Stagger reveal delays for work cards ──
-    const workCards = document.querySelectorAll('.work-card.reveal');
-    workCards.forEach((card, i) => {
-        card.style.transitionDelay = `${i * 0.08}s`;
-    });
-
-    // ── Parallax subtle shift on hero portrait (desktop only) ──
-    if (window.innerWidth > 768) {
-        const portrait = document.querySelector('.hero-portrait');
-        window.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 14;
-            const y = (e.clientY / window.innerHeight - 0.5) * 14;
-            portrait.style.transform = `translate(${x}px, ${y}px)`;
-            portrait.style.transition = 'transform 0.25s ease-out';
-        });
-    }
-</script>
+        if (window.innerWidth > 768) {
+            const portrait = document.querySelector('.hero-portrait');
+            window.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 14;
+                const y = (e.clientY / window.innerHeight - 0.5) * 14;
+                portrait.style.transform = `translate(${x}px, ${y}px)`;
+                portrait.style.transition = 'transform 0.25s ease-out';
+            });
+        }
+    </script>
 </body>
 </html>
