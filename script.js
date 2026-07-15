@@ -1,106 +1,181 @@
-// ──────────────────────────────────────────
-// 1. Stardust starfield (WebGL particles)
-// ──────────────────────────────────────────
+// ───────────────────────────────────────────────
+// Custom WebGL Stardust (no external library)
+// ───────────────────────────────────────────────
 (function() {
     const canvas = document.getElementById('stardust-canvas');
-    // Wait until Stardust libraries are loaded
-    if (typeof stardust === 'undefined' || typeof stardust.webgl === 'undefined') {
-        console.warn('Stardust not loaded – falling back to basic canvas.');
+    const gl = canvas.getContext('webgl', { alpha: false }) || canvas.getContext('experimental-webgl');
+    if (!gl) {
+        console.warn('WebGL not supported – falling back to plain background.');
         return;
     }
 
-    const platform = stardust.webgl(canvas, { width: canvas.clientWidth, height: canvas.clientHeight });
-    const stage = platform.stage();
-    const emitter = stage.emitter();
-
-    // Create a particle template for stars
-    const star = emitter.particle({
-        x: 0,
-        y: 0,
-        vx: 0,
-        vy: 0,
-        life: 5,
-        size: () => Math.random() * 2.5 + 0.6,
-        color: [1, 1, 1, () => Math.random() * 0.5 + 0.4], // white with varying alpha
-    });
-
-    // Number of stars
-    const STAR_COUNT = 200;
-    // Spread stars across the viewport
-    for (let i = 0; i < STAR_COUNT; i++) {
-        emitter.emit(star, {
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 0.3,
-            vy: (Math.random() - 0.5) * 0.3 + 0.05, // slight upward drift
-            life: 9999 // permanent
-        });
-    }
-
-    // Animation loop
-    function tick() {
-        // Parallax effect based on mouse position
-        const mouseX = window.mouseX || canvas.width / 2;
-        const mouseY = window.mouseY || canvas.height / 2;
-        const shiftX = (mouseX - canvas.width / 2) * 0.008;
-        const shiftY = (mouseY - canvas.height / 2) * 0.008;
-
-        // Update particles: move and wrap around
-        const particles = emitter.particles;
-        for (let i = 0; i < particles.length; i++) {
-            const p = particles[i];
-            p.x += p.vx;
-            p.y += p.vy;
-            if (p.x < -10) p.x = canvas.width + 10;
-            if (p.x > canvas.width + 10) p.x = -10;
-            if (p.y < -10) p.y = canvas.height + 10;
-            if (p.y > canvas.height + 10) p.y = -10;
-
-            // Apply parallax offset to draw position (not stored permanently)
-            // Stardust draws using x,y directly, so we'll adjust them every frame
-            // We'll set a temporary offset, but better: use the emitter's transform.
-            // For simplicity, we adjust x,y directly (will drift slightly, but acceptable).
-            p.x += shiftX * 0.01;
-            p.y += shiftY * 0.01;
+    // Vertex shader – places a point for each star
+    const vertexShaderSource = `
+        attribute vec2 a_position;
+        attribute float a_size;
+        attribute float a_alpha;
+        uniform vec2 u_resolution;
+        uniform vec2 u_mouse;   // mouse position in pixels
+        varying float v_alpha;
+        void main() {
+            // parallax offset based on mouse position
+            vec2 offset = (u_mouse - u_resolution * 0.5) * 0.004 * a_size;
+            vec2 pos = a_position + offset;
+            // convert to clip space
+            vec2 clipSpace = (pos / u_resolution) * 2.0 - 1.0;
+            gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+            gl_PointSize = a_size;
+            v_alpha = a_alpha;
         }
+    `;
 
-        stage.render();
-        requestAnimationFrame(tick);
+    // Fragment shader – soft circle with glow
+    const fragmentShaderSource = `
+        precision mediump float;
+        varying float v_alpha;
+        void main() {
+            float dist = length(gl_PointCoord - 0.5);
+            float alpha = 1.0 - smoothstep(0.4, 0.5, dist);
+            alpha *= v_alpha;
+            gl_FragColor = vec4(1.0, 1.0, 1.0, alpha);
+        }
+    `;
+
+    // Compile shader
+    function createShader(gl, type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            console.error('Shader compile error:', gl.getShaderInfoLog(shader));
+            gl.deleteShader(shader);
+            return null;
+        }
+        return shader;
     }
 
-    // Handle resize
-    window.addEventListener('resize', () => {
-        canvas.width = canvas.clientWidth;
-        canvas.height = canvas.clientHeight;
-        platform.resize(canvas.width, canvas.height);
-    });
+    const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+    const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+    const program = gl.createProgram();
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error('Program link error:', gl.getProgramInfoLog(program));
+        return;
+    }
+    gl.useProgram(program);
 
-    // Track mouse
+    // Star data
+    const STAR_COUNT = 220;
+    const positions = new Float32Array(STAR_COUNT * 2);
+    const sizes = new Float32Array(STAR_COUNT);
+    const alphas = new Float32Array(STAR_COUNT);
+
+    // Random initial positions (normalized 0-1, later scaled by resolution)
+    for (let i = 0; i < STAR_COUNT; i++) {
+        positions[i * 2] = Math.random();
+        positions[i * 2 + 1] = Math.random();
+        sizes[i] = Math.random() * 2.5 + 0.5;
+        alphas[i] = Math.random() * 0.8 + 0.2;
+    }
+
+    // Buffers
+    const positionBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+    const positionLoc = gl.getAttribLocation(program, 'a_position');
+    gl.enableVertexAttribArray(positionLoc);
+    gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0);
+
+    const sizeBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, sizeBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, sizes, gl.STATIC_DRAW);
+    const sizeLoc = gl.getAttribLocation(program, 'a_size');
+    gl.enableVertexAttribArray(sizeLoc);
+    gl.vertexAttribPointer(sizeLoc, 1, gl.FLOAT, false, 0, 0);
+
+    const alphaBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, alphaBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, alphas, gl.STATIC_DRAW);
+    const alphaLoc = gl.getAttribLocation(program, 'a_alpha');
+    gl.enableVertexAttribArray(alphaLoc);
+    gl.vertexAttribPointer(alphaLoc, 1, gl.FLOAT, false, 0, 0);
+
+    // Uniforms
+    const resolutionLoc = gl.getUniformLocation(program, 'u_resolution');
+    const mouseLoc = gl.getUniformLocation(program, 'u_mouse');
+
+    // Resize canvas to match display size
+    function resize() {
+        const displayWidth = canvas.clientWidth;
+        const displayHeight = canvas.clientHeight;
+        if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+            canvas.width = displayWidth;
+            canvas.height = displayHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    // Mouse state (default to center)
+    let mouseX = canvas.width / 2;
+    let mouseY = canvas.height / 2;
+
     window.addEventListener('mousemove', (e) => {
-        window.mouseX = e.clientX;
-        window.mouseY = e.clientY;
+        mouseX = e.clientX;
+        mouseY = e.clientY;
     });
     window.addEventListener('touchmove', (e) => {
         if (e.touches.length > 0) {
-            window.mouseX = e.touches[0].clientX;
-            window.mouseY = e.touches[0].clientY;
+            mouseX = e.touches[0].clientX;
+            mouseY = e.touches[0].clientY;
         }
     }, { passive: true });
     window.addEventListener('touchend', () => {
-        window.mouseX = canvas.width / 2;
-        window.mouseY = canvas.height / 2;
+        mouseX = canvas.width / 2;
+        mouseY = canvas.height / 2;
     });
 
-    // Initialize mouse position
-    window.mouseX = canvas.width / 2;
-    window.mouseY = canvas.height / 2;
+    // Twinkling effect: vary alpha over time
+    function updateAlphas(time) {
+        for (let i = 0; i < STAR_COUNT; i++) {
+            // use a unique sine frequency based on star index
+            const speed = (i * 0.01) % 0.5 + 0.3;
+            const twinkle = Math.sin(time * speed + i) * 0.15 + 0.85;
+            alphas[i] = (Math.random() * 0.2 + 0.3) * twinkle; // base + twinkle
+        }
+        gl.bindBuffer(gl.ARRAY_BUFFER, alphaBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, alphas, gl.DYNAMIC_DRAW);
+    }
 
-    tick();
+    let lastTime = 0;
+    function animate(now) {
+        resize();
+        const dt = now - lastTime;
+        // Update alphas every 200ms for subtle twinkling
+        if (dt > 200 || lastTime === 0) {
+            updateAlphas(now * 0.001);
+            lastTime = now;
+        }
+
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.useProgram(program);
+
+        gl.uniform2f(resolutionLoc, canvas.width, canvas.height);
+        gl.uniform2f(mouseLoc, mouseX, mouseY);
+
+        gl.drawArrays(gl.POINTS, 0, STAR_COUNT);
+        requestAnimationFrame(animate);
+    }
+
+    resize();
+    animate(0);
 })();
 
-// ──────────────────────────────────────────
-// 2. Standard portfolio scripts
-// ──────────────────────────────────────────
+// ───────────────────────────────────────────────
+// Standard portfolio scripts
+// ───────────────────────────────────────────────
 document.getElementById('year').textContent = new Date().getFullYear();
 
 // Scroll reveal
