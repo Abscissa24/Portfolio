@@ -1,5 +1,5 @@
 :root {
-    --bg: #050508;            /* deeper black */
+    --bg: #0b0b10;
     --surface: #14141b;
     --surface-hover: #1a1a24;
     --text: #e4e1dc;
@@ -44,14 +44,14 @@ body {
     pointer-events: none;
 }
 
-/* Subtle grain overlay (optional – matches lvardox) */
+/* Subtle grain overlay */
 body::after {
     content: '';
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.025;
+    opacity: 0.035;
     background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
