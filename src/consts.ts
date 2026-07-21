@@ -4,7 +4,7 @@ export const SITE: Site = {
   TITLE: "Abscissa",
   DESCRIPTION: "Armiel Pillay's personal website",
   AUTHOR: "Armiel Pillay",
-  REPO_URL: "https://github.com/Abscissa24/Portfolio",
+  REPO_URL: "https://github.com/Abscissa24",
 };
 
 // Shared with BaseHead (which preloads it) so the URL only lives in one
