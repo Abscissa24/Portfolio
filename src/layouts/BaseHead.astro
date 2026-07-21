@@ -1,0 +1,121 @@
+---
+import { ClientRouter } from "astro:transitions";
+import { AVATAR_URL } from "@/consts";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const { title, description } = Astro.props;
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Favicon -->
+<link
+  rel="icon"
+  type="image/svg+xml"
+  href={`${import.meta.env.BASE_URL}favicon.svg`}
+/>
+
+<!-- Fonts -->
+<link
+  rel="preload"
+  href={`${import.meta.env.BASE_URL}fonts/Inter-Regular.woff2`}
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href={`${import.meta.env.BASE_URL}fonts/Inter-Bold.woff2`}
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+
+<!-- Avatar photo (Photo.tsx, Home page only). It's a large remote
+     file, and previously only started fetching once the Home page's
+     React island hydrated client-side - by then the rest of the UI
+     had already painted, so the avatar visibly popped in afterward.
+     Preloading it from every page's <head> means the browser starts
+     that fetch immediately (in parallel with everything else) and, on
+     the ~5-minute HTTP cache this file is served with, means it's
+     already warm in cache if you arrive at Home by navigating there
+     from About/Projects rather than landing on it directly. -->
+<link rel="preload" href={AVATAR_URL} as="image" fetchpriority="high" />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+
+<!--  Client-side routing / View Transitions -->
+<ClientRouter />
+
+<!--  Theme + Reduced Motion -->
+<script is:inline>
+  const setTheme = () => {
+    const theme = (() => {
+      if (
+        typeof localStorage !== "undefined" &&
+        localStorage.getItem("theme")
+      ) {
+        return localStorage.getItem("theme");
+      }
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "dark";
+      }
+      return "light";
+    })();
+
+    if (theme === "light") {
+      document.documentElement.classList.remove("dark");
+    } else {
+      document.documentElement.classList.add("dark");
+    }
+
+    window.localStorage.setItem("theme", theme || "light");
+  };
+
+  const setReducedMotion = () => {
+    const reducedMotion = (() => {
+      if (
+        typeof localStorage !== "undefined" &&
+        localStorage.getItem("reducedMotion")
+      ) {
+        return localStorage.getItem("reducedMotion") === "true";
+      }
+      return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    })();
+
+    document.documentElement.classList.toggle("reduce-motion", reducedMotion);
+    window.localStorage.setItem(
+      "reducedMotion",
+      reducedMotion ? "true" : "false",
+    );
+  };
+
+  // Run immediately - not wrapped in an astro:page-load listener, which
+  // only fires once the page has essentially finished loading (well
+  // after first paint). Waiting for that event means the browser paints
+  // the default light/full-motion state first, then flips - a visible
+  // flash. Running synchronously here, before <body> is parsed, means
+  // the correct class is already on <html> for the very first paint.
+  setTheme();
+  setReducedMotion();
+
+  // Client-side navigations swap in a freshly server-rendered <head>/
+  // <body>, so re-apply both on every swap too.
+  document.addEventListener("astro:after-swap", setTheme);
+  document.addEventListener("astro:after-swap", setReducedMotion);
+</script>

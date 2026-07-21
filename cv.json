@@ -1,0 +1,200 @@
+{
+  "basics": {
+    "name": "Armiel Pillay",
+    "nickname": "Abscissa",
+    "label": "Final-year Applied Mathematics & Computer Science undergraduate.",
+    "summary": "I'm an open-source software engineer who bridges the gap between complex problems and real-world solutions through lightweight, high-performance software. My work includes developing AxOS, an international Linux–based operating system used by thousands of people, building financial tools that entrepreneurs rely on every day, and creating the software infrastructure that powers scholastic chess across Southern Africa. I believe great software should be fast, intuitive, and dependable—whether it's powering an operating system, supporting businesses, or serving communities.",
+    "location": {
+      "city": "Port Shepstone",
+      "countryCode": "27",
+      "region": "KwaZulu-Natal"
+    },
+    "socials": [
+      {
+        "network": "email",
+        "url": "mailto:armielpillay24@gmail.com"
+      },
+      {
+        "network": "github",
+        "url": "https://github.com/Abscissa24"
+      },
+      {
+        "network": "linkedin",
+        "url": "https://linkedin.com/in/armielpillay"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "Port Shepstone High School",
+      "position": "Chess Coach",
+      "location_type": "On-site",
+      "location": "Port Shepstone, South Africa",
+      "url": null,
+      "startDate": "2024-01-01",
+      "endDate": null,
+      "responsibilities": [
+        "Build passion through critical thinking and problem-solving.",
+        "Master fundamentals: openings, tactics, strategy, and endgames.",
+        "Personalised coaching for all skill levels.",
+        "A qualified Chess Tournament Supervisor and Arbiter."
+      ]
+    },
+    {
+      "name": "Department of Education (KZN)",
+      "position": "Examination Assistant",
+      "location_type": "On-site",
+      "location": "KwaZulu-Natal, South Africa",
+      "url": null,
+      "startDate": "2023-01-01",
+      "endDate": "2024-12-31",
+      "responsibilities": [
+        "Audited math exams for grading and technical accuracy.",
+        "Coordinated with teams to meet tight production deadlines.",
+        "Managed cross-center queries via MS Office.",
+        "Analytical problem-solving, leadership, and strategic planning."
+      ]
+    },
+    {
+      "name": "Incredible Connection",
+      "position": "Sales Executive",
+      "location_type": "On-site",
+      "location": "South Africa",
+      "url": null,
+      "startDate": "2022-01-01",
+      "endDate": "2023-12-31",
+      "responsibilities": [
+        "Simplified complex topics into a clearer directive for customers.",
+        "Accumulated vast knowledge about the latest technologies.",
+        "Gained strong people skills and technical expertise.",
+        "Created business alliances to fortify the economy."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of South Africa",
+      "url": "https://www.unisa.ac.za/",
+      "area": "BSc in Applied Mathematics and Computer Science",
+      "studyType": "Bachelor's Degree",
+      "startDate": "2023-01-01",
+      "endDate": null,
+      "summary": null
+    },
+    {
+      "institution": "Port Shepstone Secondary School",
+      "url": null,
+      "area": "NSC - Bachelor's Endorsement",
+      "studyType": "National Senior Certificate",
+      "startDate": "2017-01-01",
+      "endDate": "2021-12-31",
+      "summary": null
+    }
+  ],
+  "awards": [],
+  "skills": {
+    "programming": [
+      "Python",
+      "SQL",
+      "C++"
+    ],
+    "technical": [
+      "Applied Mathematics & Modeling",
+      "Software Engineering",
+      "Linux Systems Administration"
+    ],
+    "leadership": [
+      "Project Management",
+      "Strategic Planning & Analysis",
+      "Digital & NPO Leadership"
+    ],
+    "soft": [
+      "Coaching & Mentorship"
+    ]
+  },
+  "projects": [
+    {
+      "name": "This portfolio",
+      "description": "This portfolio, made with Astro and Tailwind.",
+      "url": "https://abscissa24.github.io/Portfolio/",
+      "highlights": [
+        "Made with Astro and Tailwind.",
+        "Cool animations."
+      ],
+      "technologies": [
+        "Astro",
+        "Tailwind",
+        "JavaScript"
+      ]
+    },
+    {
+      "name": "Remuneration Tracker",
+      "description": "Invoicing and income-tracking app used by entrepreneurs across South Africa.",
+      "url": "#",
+      "highlights": [
+        "Single-file app with Firebase Auth + Firestore sync",
+        "Packaged as a native desktop app with Tauri v2",
+        "Auto-notes pattern recognition and PDF invoice generation"
+      ],
+      "technologies": [
+        "HTML",
+        "JavaScript",
+        "Firebase",
+        "Tauri"
+      ]
+    },
+    {
+      "name": "Chess Coach Utility",
+      "description": "Tournament management tool used by chess coaches and administrators across Southern Africa.",
+      "url": "#",
+      "highlights": [
+        "Swiss pairing engine with balanced colour assignment",
+        "Sectioned tournaments with age categories and ELO tracking",
+        "Localised ratings persisted at school level"
+      ],
+      "technologies": [
+        "HTML",
+        "JavaScript"
+      ]
+    },
+    {
+      "name": "AxOS",
+      "description": "A Linux-based operating system used by thousands of people worldwide, including in France and the UK.",
+      "url": "#",
+      "highlights": [
+        "Custom open-source Linux distribution",
+        "International user base across multiple countries"
+      ],
+      "technologies": [
+        "Linux"
+      ]
+    },
+    {
+      "name": "Qhakaza Sports Foundation",
+      "description": "Website built and maintained as Digital Director of the Qhakaza Sports Foundation (NPO).",
+      "url": "https://abscissa24.github.io/Qhakaza/",
+      "highlights": [
+        "Serves as the foundation's public-facing website",
+        "Built and run in the Digital Director role"
+      ],
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ]
+    },
+    {
+      "name": "Tyrartsy Marketplace",
+      "description": "A storefront site for a local business to showcase inventory and take customer orders.",
+      "url": "https://sites.google.com/view/tyrartsy/home",
+      "highlights": [
+        "Product catalogue for a local business",
+        "Order placement for customers"
+      ],
+      "technologies": [
+        "Google Sites"
+      ]
+    }
+  ]
+}
+
