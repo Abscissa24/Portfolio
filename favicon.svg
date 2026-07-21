@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+    <circle cx="64" cy="64" r="58" fill="none" stroke-width="6" />
+    <text x="64" y="80" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="52">AP</text>
+    <style>
+        circle { stroke: #000; }
+        text { fill: #000; }
+        @media (prefers-color-scheme: dark) {
+            circle { stroke: #FFF; }
+            text { fill: #FFF; }
+        }
+    </style>
+</svg>
