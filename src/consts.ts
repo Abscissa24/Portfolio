@@ -10,7 +10,7 @@ export const SITE: Site = {
 // Shared with BaseHead (which preloads it) so the URL only lives in one
 // place instead of having to stay in sync between the two files.
 export const AVATAR_URL =
-  "https://raw.githubusercontent.com/Abscissa24/Portfolio/main/Assets/Avatar/Profile.webp";
+  "https://raw.githubusercontent.com/Abscissa24/portfolio-codebase/main/Assets/Avatar/Profile.webp";
 
 const BASE = import.meta.env.BASE_URL;
 
