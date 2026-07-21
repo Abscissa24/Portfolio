@@ -6,7 +6,7 @@ import { defineConfig } from "astro/config";
 // https://astro.build/config
 export default defineConfig({
   site: "https://abscissa24.github.io",
-  base: "/Portfolio/",
+  base: 'portfolio-codebase',
   integrations: [react(), icon()],
   // The site already ships <ClientRouter /> for SPA-style navigation,
   // but that alone only swaps the DOM faster - it still waits for the
