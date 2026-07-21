@@ -20,10 +20,10 @@ export const LINKS: Links = [
   },
   {
     TEXT: "About",
-    HREF: `${BASE}about`,
+    HREF: `${BASE}about/`,
   },
   {
     TEXT: "Projects",
-    HREF: `${BASE}projects`,
+    HREF: `${BASE}projects/`,
   },
 ];
