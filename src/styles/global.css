@@ -8,6 +8,32 @@
  */
 @config "../../tailwind.config.mjs";
 
+/* Tailwind v3 (used by the original Astro 4 version of this site)
+   always paired `backdrop-filter` with a `-webkit-backdrop-filter`
+   fallback. Tailwind v4 dropped that: its documented baseline browser
+   support (Safari 16.4+ / Chrome 111+ / Firefox 128+) is recent enough
+   that the unprefixed property alone is assumed to be sufficient, so
+   the utility classes below (and any other `backdrop-blur-*` used in
+   future) no longer emit the -webkit- version at all.
+   Without it, `backdrop-filter` silently does nothing in any browser
+   that still needs the prefix - no error, no fallback, the element
+   just renders as if the property were never set. That's what made
+   the mobile bottom nav bar's (and the desktop header's, once
+   scrolled - see `header.scrolled` below) frosted-glass background
+   render as plain, unblurred transparency instead of the intended
+   frosted glass look. Re-adding it here restores that cross-browser
+   parity for every current and future use of `backdrop-blur-*`,
+   reusing the same `--tw-backdrop-*` custom properties the Tailwind
+   utility already sets, rather than only patching the one class this
+   was first noticed on. */
+[class*="backdrop-blur"] {
+  -webkit-backdrop-filter: var(--tw-backdrop-blur, ) var(--tw-backdrop-brightness, )
+    var(--tw-backdrop-contrast, ) var(--tw-backdrop-grayscale, )
+    var(--tw-backdrop-hue-rotate, ) var(--tw-backdrop-invert, )
+    var(--tw-backdrop-opacity, ) var(--tw-backdrop-saturate, )
+    var(--tw-backdrop-sepia, );
+}
+
 @layer base {
   /*
    * These paths are absolute and must match astro.config.mjs's `base`.
@@ -62,6 +88,26 @@ html {
 html.dark {
   background-color: black;
   color-scheme: dark;
+}
+
+/* The starry background (Starry.tsx) renders its particles in a single
+   fixed color (white) and flips between light/dark by inverting the
+   canvas with a CSS filter, rather than re-coloring particles through
+   the tsParticles engine. Re-coloring via the engine means changing
+   `options`, which forces the whole particle field to be torn down and
+   regenerated from scratch - on a slower device that's a genuinely
+   visible gap where the page background has already flipped but no
+   stars are drawn yet. A CSS filter is applied to the already-rendered
+   canvas pixels each frame, so it's instant and needs no
+   reinitialization: white particles inverted are black, and inverting
+   doesn't touch the canvas's transparency, so the rest of the page
+   underneath is unaffected. */
+#tsparticles canvas {
+  filter: invert(1);
+}
+
+html.dark #tsparticles canvas {
+  filter: none;
 }
 
 html,

@@ -5,11 +5,26 @@ import { Icon } from "astro-icon/components";
 import { SITE, LINKS } from "@/consts";
 ---
 
+<!--
+  No transition:name here (unlike Header's site-header) - Chromium
+  breaks backdrop-filter on a DESCENDANT of any element that has a
+  view-transition-name assigned (which is what transition:name does),
+  even outside of an active transition. That's exactly this element's
+  structure: the frosted-glass pill below is nested inside this
+  wrapper, not applied to it directly. Header is fine because it
+  applies backdrop-blur-sm to the SAME element that carries
+  transition:name, and the bug is specifically about descendants, not
+  the named element itself. transition:persist alone (kept below)
+  still preserves this element's DOM node and state across page
+  navigations - it's transition:name specifically that triggers the
+  browser's view-transition capture behavior responsible for the bug,
+  and removing it costs nothing visually since this element persists
+  (and so never has anything to cross-fade from/to in the first place).
+-->
 <div
   id="navbar"
   class="fixed bottom-2 left-1/2 z-50 block h-16 -translate-x-1/2 sm:hidden"
   transition:persist
-  transition:name="site-navbar"
 >
   <div class="container mx-auto">
     <div

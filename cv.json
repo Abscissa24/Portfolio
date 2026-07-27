@@ -93,10 +93,66 @@
   ],
   "awards": [],
   "skills": {
-    "programming": [
+    "operating_systems": [
+      "Linux (expert)",
+      "Windows (intermediate)"
+    ],
+    "languages": [
+      "HTML/CSS",
+      "JavaScript",
       "Python",
+      "React",
+      "Arduino",
+      "Bash",
+      "Powershell",
+      "C",
+      "Rust",
+      "Markdown",
+      "QML",
       "SQL",
       "C++"
+    ],
+    "cloud": [
+      "Vercel",
+      "Google Cloud",
+      "Microsoft Azure",
+      "Oracle Cloud"
+    ],
+    "networking": [
+      "HTTP",
+      "FTP",
+      "SSH",
+      "DNS",
+      "Cisco Basics"
+    ],
+    "frameworks": [
+      "NodeJS",
+      "NodeRed",
+      "Tailwind",
+      "GTK",
+      "QT",
+      "Expo"
+    ],
+    "databases": [
+      "MySQL",
+      "SQLite"
+    ],
+    "tools": [
+      "Git",
+      "Docker",
+      "Notion",
+      "Office 365"
+    ],
+    "virtualization": [
+      "VirtualBox",
+      "VMware",
+      "QEMU",
+      "Hyper-V"
+    ],
+    "security": [
+      "Bitlocker encryption",
+      "LUKS encryption",
+      "Basic network security"
     ],
     "technical": [
       "Applied Mathematics & Modeling",
@@ -109,38 +165,52 @@
       "Digital & NPO Leadership"
     ],
     "soft": [
-      "Coaching & Mentorship"
+      "Coaching & Mentorship",
+      "Teamwork",
+      "Problem-solving",
+      "Adaptability",
+      "Creativity",
+      "Time management",
+      "Oral and written communication",
+      "Agile",
+      "Curiosity",
+      "Autodidacticism",
+      "Autonomy"
     ]
   },
   "projects": [
     {
-      "name": "This portfolio",
-      "description": "This portfolio, made with Astro and Tailwind.",
-      "url": "https://abscissa24.github.io/Portfolio/",
+      "name": "AxOS",
+      "description": "AxOS is a Linux distribution aimed on beauty and performances.",
+      "url": "https://www.axos-project.com",
       "highlights": [
-        "Made with Astro and Tailwind.",
-        "Cool animations."
+        "Using custom made apps such as an installer, a mirror database and more.",
+        "Designed to be elegant but still keeps his performances."
       ],
       "technologies": [
-        "Astro",
-        "Tailwind",
-        "JavaScript"
+        "Linux",
+        "Rust",
+        "Bash",
+        "Python",
+        "GTK",
+        "JavaScript",
+        "C"
       ]
     },
     {
-      "name": "Remuneration Tracker",
-      "description": "Invoicing and income-tracking app used by entrepreneurs across South Africa.",
-      "url": "https://github.com/Abscissa24/RT",
+      "name": "Sleex",
+      "description": "The third desktop environment for AxOS",
+      "url": "https://github.com/axos-project/sleex",
       "highlights": [
-        "Single-file app with Firebase Auth + Firestore sync",
-        "Packaged as a native desktop app with Tauri v2",
-        "Auto-notes pattern recognition and PDF invoice generation"
+        "Made with QtQuick/Quickshell.",
+        "Has a lot of customization options."
       ],
       "technologies": [
-        "HTML",
         "JavaScript",
-        "Firebase",
-        "Tauri"
+        "GTK",
+        "QT/QML",
+        "QtQuick",
+        "Bash"
       ]
     },
     {
@@ -158,15 +228,19 @@
       ]
     },
     {
-      "name": "AxOS",
-      "description": "A Linux-based operating system used by thousands of people worldwide, including in France and the UK.",
-      "url": "https://axos-project.com",
+      "name": "Remuneration Tracker",
+      "description": "Invoicing and income-tracking app used by entrepreneurs across South Africa.",
+      "url": "https://github.com/Abscissa24/RT",
       "highlights": [
-        "Custom open-source Linux distribution",
-        "International user base across multiple countries"
+        "Single-file app with Firebase Auth + Firestore sync",
+        "Packaged as a native desktop app with Tauri v2",
+        "Auto-notes pattern recognition and PDF invoice generation"
       ],
       "technologies": [
-        "Linux"
+        "HTML",
+        "JavaScript",
+        "Firebase",
+        "Tauri"
       ]
     },
     {
@@ -194,7 +268,35 @@
       "technologies": [
         "Google Sites"
       ]
+    },
+    {
+      "name": "The Utilities Project",
+      "description": "A collection of handmade modules designed to improve the Windows experience.",
+      "url": "",
+      "highlights": [
+        "Automation of repetitive Windows tasks.",
+        "Database management modules.",
+        "System optimisation and efficiency improvements."
+      ],
+      "technologies": [
+        "PowerShell",
+        "Batch",
+        "VBScript"
+      ]
+    },
+    {
+      "name": "This portfolio",
+      "description": "This portfolio, made with Astro and Tailwind.",
+      "url": "https://abscissa24.github.io/Portfolio/",
+      "highlights": [
+        "Made with Astro and Tailwind.",
+        "Cool animations."
+      ],
+      "technologies": [
+        "Astro",
+        "Tailwind",
+        "JavaScript"
+      ]
     }
   ]
 }
-

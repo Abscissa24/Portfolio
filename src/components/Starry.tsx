@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useCallback, useRef } from "react";
+import { useEffect, useMemo, useCallback, useRef } from "react";
 import Particles, { ParticlesProvider } from "@tsparticles/react";
 import { type Container, type ISourceOptions } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
@@ -22,7 +22,6 @@ const Starry = ({
   particleDensity,
   opacity,
 }: ParticlesProps) => {
-  const [particleColor, setParticleColor] = useState("#000");
   const controls = useAnimation();
   // The live tsParticles container, once loaded. Kept in a ref (not
   // state) so pausing/resuming it never triggers a re-render or
@@ -40,10 +39,8 @@ const Starry = ({
   const FADE_SECONDS = 1;
 
   useEffect(() => {
-    const updateFromHtmlClass = () => {
+    const updateFromReduceMotionClass = () => {
       const root = document.documentElement;
-      setParticleColor(root.classList.contains("dark") ? "#FFF" : "#000");
-
       const reduced = root.classList.contains("reduce-motion");
       if (reduced === reducedMotionRef.current) return;
       reducedMotionRef.current = reduced;
@@ -71,9 +68,9 @@ const Starry = ({
         });
       }
     };
-    updateFromHtmlClass();
+    updateFromReduceMotionClass();
 
-    const observer = new MutationObserver(updateFromHtmlClass);
+    const observer = new MutationObserver(updateFromReduceMotionClass);
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ["class"],
@@ -88,7 +85,8 @@ const Starry = ({
       containerRef.current = container;
       // Cover the case where reduced motion is already on before this
       // fires: stay paused and invisible instead of loading in, since
-      // reduced motion means faded out (see updateFromHtmlClass above).
+      // reduced motion means faded out (see updateFromReduceMotionClass
+      // above).
       if (reducedMotionRef.current) {
         container.pause();
         return;
@@ -112,29 +110,12 @@ const Starry = ({
         enable: true,
         zIndex: -1,
       },
-      // 120 was overkill for a decorative background layer - most
-      // displays cap out at 60-90Hz anyway, and on the ones that don't
-      // (120Hz+ phones/monitors) rendering the field twice as often as
-      // needed just burns extra main-thread/GPU budget that competes
-      // with everything else on the page, including click handling for
-      // nav links. 60 is visually identical on the vast majority of
-      // screens and leaves more headroom for actual interactions.
-      fpsLimit: 60,
+      fpsLimit: 120,
       interactivity: {
         events: {
           onClick: {
             enable: true,
             mode: "push",
-          },
-          onHover: {
-            // Was `false` in the original - reduced motion freezes the
-            // whole container via .pause()/.play() (see above), so this
-            // is left statically on rather than made to depend on
-            // reducedMotion: doing that in `options` would make
-            // <Particles> reinitialize the whole field on every toggle
-            // instead of just freezing it in place.
-            enable: true,
-            mode: "repulse",
           },
           // `resize` takes an { enable, delay } object, not a boolean -
           // the previous `true as any` compiled, but silently discarded
@@ -150,25 +131,6 @@ const Starry = ({
         modes: {
           push: {
             quantity: 4,
-          },
-          repulse: {
-            // The repulse engine adds `speed * factor` (clamped to
-            // maxSpeed) straight to each particle's position every
-            distance: 80,
-            duration: 0.4,
-            factor: 20,
-            maxSpeed: 12,
-            // Restore was off entirely before, so once a particle got
-            // pushed it just stayed displaced (movement speed is only
-            // 0.1-1px/frame, so drifting back on its own could take a
-            // very long time) - that read as the field "getting stuck"
-            // rather than flowing. Turning it on eases particles back
-            // to their pre-repulse position once the cursor moves away.
-            restore: {
-              enable: true,
-              speed: 0.4,
-              delay: 0,
-            },
           },
         },
       },
@@ -201,36 +163,61 @@ const Starry = ({
             retries: 0,
           },
         },
-        color: {
-          value: particleColor,
-          animation: {
-            h: {
-              count: 0,
-              enable: false,
-              speed: 1,
-              decay: 0,
-              delay: 0,
-              sync: true,
-              offset: 0,
+        // tsParticles v4 moved particle fill color from `particles.color`
+        // to `particles.paint.color` (see the v4 migration notes / engine
+        // changelog: "changed particles.color to particles.paint.color").
+        // The old `particles.color` path is silently ignored by v4 - no
+        // warning, no error - so particles always fell back to the
+        // engine's built-in default color (white) regardless of what was
+        // configured here.
+        //
+        // The color is fixed at white rather than driven by the current
+        // theme: light/dark is instead handled by inverting the canvas
+        // with a CSS filter (see #tsparticles canvas in global.css).
+        // Feeding the theme into these options would put `particleColor`
+        // in this object's dependency array, which changes the `options`
+        // reference on every theme toggle and makes <Particles> tear the
+        // whole field down and regenerate it from scratch - visible as a
+        // gap between the (instant) background color swap and the stars
+        // reappearing. A CSS filter recolors already-rendered pixels
+        // every frame instead, so it's instant and never reinitializes
+        // anything.
+        paint: {
+          color: {
+            value: "#FFF",
+            animation: {
+              h: {
+                count: 0,
+                enable: false,
+                speed: 1,
+                decay: 0,
+                delay: 0,
+                sync: true,
+                offset: 0,
+              },
+              s: {
+                count: 0,
+                enable: false,
+                speed: 1,
+                decay: 0,
+                delay: 0,
+                sync: true,
+                offset: 0,
+              },
+              l: {
+                count: 0,
+                enable: false,
+                speed: 1,
+                decay: 0,
+                delay: 0,
+                sync: true,
+                offset: 0,
+              },
             },
-            s: {
-              count: 0,
-              enable: false,
-              speed: 1,
-              decay: 0,
-              delay: 0,
-              sync: true,
-              offset: 0,
-            },
-            l: {
-              count: 0,
-              enable: false,
-              speed: 1,
-              decay: 0,
-              delay: 0,
-              sync: true,
-              offset: 0,
-            },
+          },
+          fill: {
+            enable: true,
+            opacity: 1,
           },
         },
         effect: {
@@ -507,26 +494,23 @@ const Starry = ({
       },
       detectRetina: true,
     }),
-    [minSize, maxSize, speed, particleDensity, opacity, particleColor],
+    [minSize, maxSize, speed, particleDensity, opacity],
   );
 
   return (
     <ParticlesProvider init={loadSlim}>
       <motion.div animate={controls} className={cn("opacity-0", className)}>
         <Particles
-          // @tsparticles/react's own reinit-on-options-change effect
-          // has no error handling on the reload promise, and doesn't
-          // guard against a second reload starting for the same id
-          // before a prior one has resolved. Either one is a
-          // plausible way for a theme toggle to silently never bring
-          // the field back. Keying on particleColor forces React to
-          // fully unmount the old instance (running its real cleanup,
-          // destroying its container) before mounting a fresh one for
-          // the new color, so there's no way for two loads to
-          // overlap for the same DOM id, and no way for a reload of
-          // the SAME instance to fail without something new getting a
-          // clean shot at it right after.
-          key={particleColor}
+          // No `key` tied to theme here anymore: color is now handled
+          // by a CSS filter (see the `paint.color` comment above)
+          // instead of an `options` field, and none of this component's
+          // other options ever change after mount (the props passed to
+          // <Starry> in BaseLayout.astro are static literals), so
+          // `options` keeps a stable reference for the component's
+          // whole lifetime. That means @tsparticles/react's own
+          // reinit-on-options-change effect never has a reason to fire
+          // again after the first load, so there's no repeated-reload
+          // path left for it to fail silently on.
           id="tsparticles"
           particlesLoaded={particlesLoaded}
           options={options}

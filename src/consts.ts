@@ -3,7 +3,7 @@ import type { Site, Links } from "@/types";
 export const SITE: Site = {
   TITLE: "Abscissa",
   DESCRIPTION: "Armiel Pillay's personal website",
-  AUTHOR: "Armiel Pillay",
+  AUTHOR: "Abscissa",
   REPO_URL: "https://github.com/Abscissa24",
 };
 

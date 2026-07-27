@@ -60,7 +60,15 @@ export interface Award {
 }
 
 export interface Skills {
-  programming: string[];
+  operating_systems: string[];
+  languages: string[];
+  cloud: string[];
+  networking: string[];
+  frameworks: string[];
+  databases: string[];
+  tools: string[];
+  virtualization: string[];
+  security: string[];
   technical: string[];
   leadership: string[];
   soft: string[];

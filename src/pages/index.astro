@@ -1,6 +1,6 @@
 ---
 import Button from "@/components/Button.astro";
-import Photo from "@/components/Photo";
+import Photo from "@/components/Photo.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { SITE, AVATAR_URL } from "@/consts";
 import { basics } from "@cv";
@@ -42,7 +42,7 @@ const { name, label, summary, socials } = basics;
           </div>
           <!-- Photo Section -->
           <div class="order-1 mb-8 xl:order-none xl:mb-0">
-            <Photo client:load imageSrc={AVATAR_URL} imageAlt={name} />
+            <Photo imageSrc={AVATAR_URL} imageAlt={name} />
           </div>
         </div>
       </div>
