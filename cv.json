@@ -181,11 +181,11 @@
   "projects": [
     {
       "name": "AxOS",
-      "description": "AxOS is a Linux distribution aimed on beauty and performances.",
+      "description": "AxOS is a Linux–based operating system used by thousands of people worldwide.",
       "url": "https://www.axos-project.com",
       "highlights": [
         "Using custom made apps such as an installer, a mirror database and more.",
-        "Designed to be elegant but still keeps his performances."
+        "Focuses on beauty and modernity, while maintaining efficiency."
       ],
       "technologies": [
         "Linux",
@@ -223,8 +223,12 @@
         "Localised ratings persisted at school level"
       ],
       "technologies": [
+        "Rust",
+        "JavaScript",
+        "Tauri",
+        "Shell",
         "HTML",
-        "JavaScript"
+        "CSS",
       ]
     },
     {
@@ -237,10 +241,12 @@
         "Auto-notes pattern recognition and PDF invoice generation"
       ],
       "technologies": [
-        "HTML",
+        "Rust",
         "JavaScript",
-        "Firebase",
-        "Tauri"
+        "Tauri",
+        "Shell",
+        "HTML",
+        "CSS",
       ]
     },
     {
