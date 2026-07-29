@@ -3,7 +3,7 @@
     "name": "Armiel Pillay",
     "nickname": "Abscissa",
     "label": "Final-year Applied Mathematics & Computer Science undergraduate.",
-    "summary": "I'm an open-source software engineer who bridges the gap between complex problems and real-world solutions through lightweight, high-performance software. My work includes developing AxOS, an international Linux–based operating system used by thousands of people, building financial tools that entrepreneurs rely on every day, and creating the software infrastructure that powers scholastic chess across Southern Africa. I believe great software should be fast, intuitive, and dependable—whether it's powering an operating system, supporting businesses, or serving communities.",
+    "summary": "I'm an open-source software engineer who bridges the gap between complex problems and real-world solutions through lightweight, high-performance software. My work includes developing AxOS, a Linux–based operating system used by thousands of people worldwide, building financial tools that entrepreneurs rely on every day, and creating the software infrastructure that powers scholastic chess across South Africa. I believe great software should be fast, intuitive, and dependable—whether it's powering an operating system, supporting businesses, or serving communities.",
     "location": {
       "city": "Port Shepstone",
       "countryCode": "27",
@@ -203,7 +203,8 @@
       "url": "https://github.com/axos-project/sleex",
       "highlights": [
         "Made with QtQuick/Quickshell.",
-        "Has a lot of customization options."
+        "Has a lot of customization options.",
+        "Smooth, efficient and modern"
       ],
       "technologies": [
         "JavaScript",
