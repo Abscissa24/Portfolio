@@ -95,22 +95,22 @@
   "skills": {
     "operating_systems": [
       "Linux (expert)",
-      "Windows (intermediate)"
+      "Windows (expert)"
     ],
     "languages": [
-      "HTML/CSS",
-      "JavaScript",
+      "C++",
       "Python",
-      "React",
-      "Arduino",
+      "Rust",
+      "SQL",
+      "C",
       "Bash",
       "Powershell",
-      "C",
-      "Rust",
+      "JavaScript",
+      "React",
+      "HTML/CSS",
       "Markdown",
-      "QML",
-      "SQL",
-      "C++"
+      "Arduino",
+      "QML"
     ],
     "cloud": [
       "Vercel",
@@ -150,7 +150,7 @@
       "Hyper-V"
     ],
     "security": [
-      "Bitlocker encryption",
+      "BitLocker encryption",
       "LUKS encryption",
       "Basic network security"
     ],
@@ -216,12 +216,13 @@
     },
     {
       "name": "Chess Coach Utility",
-      "description": "Tournament management tool used by chess coaches and administrators across Southern Africa.",
+      "description": "Tournament management tool used by chess coaches and administrators across South Africa.",
       "url": "https://github.com/Abscissa24/CCU",
       "highlights": [
         "Swiss pairing engine with balanced colour assignment",
         "Sectioned tournaments with age categories and ELO tracking",
-        "Localised ratings persisted at school level"
+        "Localised ratings persisted at school level",
+        "Cloud Sync Integration"
       ],
       "technologies": [
         "Rust",
@@ -239,7 +240,8 @@
       "highlights": [
         "Single-file app with Firebase Auth + Firestore sync",
         "Packaged as a native desktop app with Tauri v2",
-        "Auto-notes pattern recognition and PDF invoice generation"
+        "Auto-notes pattern recognition and PDF invoice generation",
+        "Cloud Sync Integration"
       ],
       "technologies": [
         "Rust",
