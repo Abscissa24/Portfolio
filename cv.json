@@ -26,6 +26,52 @@
   },
   "work": [
     {
+      "name": "Independent Development",
+      "position": "Software Engineer",
+      "location_type": "Remote",
+      "location": "Port Shepstone, South Africa",
+      "url": null,
+      "startDate": "2023-01-01",
+      "endDate": null,
+      "responsibilities": [
+        "Designed and developed open-source and proprietary software.",
+        "Built data-driven applications with statistical analysis and visualisation.",
+        "Developed financial tools used internationally and across South Africa.",
+        "Created infrastructure that powers scholastic chess across South Africa.",
+        "Managed end-to-end development, testing, and optimisation."
+      ]
+    },
+    {
+      "name": "AxOS Project",
+      "position": "AxOS Developer",
+      "location_type": "Remote",
+      "location": "France",
+      "url": "https://www.axos-project.com",
+      "startDate": "2025-01-01",
+      "endDate": null,
+      "responsibilities": [
+        "Contribute to system architecture and Linux desktop customisation.",
+        "Enhance system components to improve performance and reliability.",
+        "Troubleshoot technical issues, optimise workflows, and maintain quality.",
+        "Collaborate on open-source development for an evolving ecosystem."
+      ]
+    },
+    {
+      "name": "Qhakaza Sports Foundation (NPO)",
+      "position": "Digital Director",
+      "location_type": "Remote",
+      "location": "Margate, South Africa",
+      "url": "https://abscissa24.github.io/Qhakaza",
+      "startDate": "2025-01-01",
+      "endDate": null,
+      "responsibilities": [
+        "Lead digital initiatives and align technology with organisational objectives.",
+        "Oversee digital platform development and user experience.",
+        "Translate organisational requirements into practical digital solutions.",
+        "Created the NPO donation platform and website to strengthen its digital presence."
+      ]
+    },
+    {
       "name": "Port Shepstone High School",
       "position": "Chess Coach",
       "location_type": "On-site",
