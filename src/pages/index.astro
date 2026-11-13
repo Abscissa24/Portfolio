@@ -1,6 +1,7 @@
 ---
 import Button from "@/components/Button.astro";
 import Photo from "@/components/Photo.astro";
+import CvPreview from "@/components/CvPreview.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { AVATAR_URL, AVATAR_ALT_URL } from "@/consts";
 import { basics } from "@cv";
@@ -43,11 +44,16 @@ const homeDescription = `${name} — ${label}`;
                   />
                 ))
               }
+              <CvPreview />
             </div>
           </div>
           <!-- Photo Section -->
           <div class="order-1 mb-8 xl:order-none xl:mb-0">
-            <Photo imageSrc={AVATAR_URL} imageAlt={name} altImageSrc={AVATAR_ALT_URL} />
+            <Photo
+              imageSrc={AVATAR_URL}
+              imageAlt={name}
+              altImageSrc={AVATAR_ALT_URL}
+            />
           </div>
         </div>
       </div>

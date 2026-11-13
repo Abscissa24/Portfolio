@@ -1,0 +1,147 @@
+---
+import { Icon } from "astro-icon/components";
+import { RESUME_URL } from "@/consts";
+
+// Filename used for the downloaded copy.
+const DOWNLOAD_NAME = "Armiel-Pillay-CV.pdf";
+---
+
+<button
+  id="cv-preview-trigger"
+  type="button"
+  aria-label="Preview and download CV"
+  title="Preview and download CV"
+  class="flex size-9 items-center justify-center rounded-full border border-black/25 p-2 text-black/80 duration-300 hover:bg-black/20 hover:transition-colors dark:border-white/25 dark:text-white/80 dark:hover:bg-white/20"
+>
+  <Icon name="resume" class="block size-full" />
+</button>
+
+<div
+  id="cv-preview-modal"
+  hidden
+  class="fixed inset-0 z-[60] flex items-center justify-center p-4 print:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="cv-preview-title"
+>
+  <!-- Backdrop -->
+  <div
+    id="cv-preview-backdrop"
+    class="absolute inset-0 bg-black/60 backdrop-blur-sm"
+  >
+  </div>
+
+  <!-- Panel -->
+  <div
+    class="relative flex h-[85vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-black/25 bg-white/95 shadow-2xl saturate-200 backdrop-blur-md dark:border-white/25 dark:bg-black/80"
+  >
+    <!-- Header -->
+    <div
+      class="flex items-center justify-between gap-3 border-b border-black/10 px-4 py-3 dark:border-white/10"
+    >
+      <h2
+        id="cv-preview-title"
+        class="text-base font-bold text-black dark:text-white"
+      >
+        Curriculum Vitae
+      </h2>
+      <div class="flex items-center gap-2">
+        <a
+          href={RESUME_URL}
+          download={DOWNLOAD_NAME}
+          aria-label="Download CV as PDF"
+          class="flex items-center gap-2 rounded-full border border-black/25 px-3 py-1.5 text-sm text-black/80 duration-300 hover:bg-black/10 hover:transition-colors dark:border-white/25 dark:text-white/80 dark:hover:bg-white/10"
+        >
+          <Icon name="resume" class="size-4" />
+          <span>Download</span>
+        </a>
+        <button
+          id="cv-preview-close"
+          type="button"
+          aria-label="Close CV preview"
+          title="Close"
+          class="flex size-9 items-center justify-center rounded-full border border-black/25 p-2 text-black/80 duration-300 hover:bg-black/20 hover:transition-colors dark:border-white/25 dark:text-white/80 dark:hover:bg-white/20"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="size-full"
+          >
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Preview body -->
+    <div class="flex-1 bg-neutral-100 dark:bg-neutral-900">
+      <iframe
+        src={RESUME_URL}
+        title="CV preview"
+        class="h-full w-full border-0"
+        loading="lazy"
+      >
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  function initCvPreview() {
+    const trigger = document.getElementById("cv-preview-trigger");
+    if (!trigger || trigger.dataset.bound === "true") return;
+    trigger.dataset.bound = "true";
+
+    function getModal() {
+      return document.getElementById("cv-preview-modal");
+    }
+    function getCloseBtn() {
+      return document.getElementById("cv-preview-close");
+    }
+    function getBackdrop() {
+      return document.getElementById("cv-preview-backdrop");
+    }
+
+    function openModal() {
+      const modal = getModal();
+      if (!modal) return;
+      modal.removeAttribute("hidden");
+      document.body.style.overflow = "hidden";
+      const closeBtn = getCloseBtn();
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeModal() {
+      const modal = getModal();
+      if (!modal) return;
+      modal.setAttribute("hidden", "true");
+      document.body.style.overflow = "";
+      trigger.focus();
+    }
+
+    trigger.addEventListener("click", openModal);
+    const closeBtn = getCloseBtn();
+    const backdrop = getBackdrop();
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    if (backdrop) backdrop.addEventListener("click", closeModal);
+
+    document.addEventListener("keydown", function (event) {
+      const modal = getModal();
+      if (!modal || modal.hasAttribute("hidden")) return;
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    });
+  }
+
+  initCvPreview();
+  document.addEventListener("astro:after-swap", initCvPreview);
+</script>
