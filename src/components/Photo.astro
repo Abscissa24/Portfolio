@@ -55,29 +55,17 @@ const { imageSrc, imageAlt, altImageSrc } = Astro.props;
 </div>
 
 <script is:inline>
-  // Alternate between the two profile avatars on each visit: read the
-  // persisted index, show that avatar, then flip it so the next visit
-  // shows the other one. Falls back to the primary avatar if storage
-  // is unavailable.
+  // Show one of the two profile avatars at random on every page load, so
+  // different visitors (and reloads) see different images instead of one
+  // fixed picture. Falls back to the primary avatar if the data attrs are
+  // missing.
   function setAvatar() {
     const img = document.getElementById("avatar-img");
     if (!img) return;
     const a = img.dataset.avatar0;
     const b = img.dataset.avatar1;
-    if (!a || !b) return;
-    let idx = 0;
-    try {
-      const stored = localStorage.getItem("avatarIndex");
-      if (stored === "1") idx = 1;
-    } catch (e) {
-      idx = 0;
-    }
-    img.src = idx === 0 ? a : b;
-    try {
-      localStorage.setItem("avatarIndex", idx === 0 ? "1" : "0");
-    } catch (e) {
-      /* storage is best-effort */
-    }
+    if (!a) return;
+    img.src = b && Math.random() < 0.5 ? b : a;
   }
   setAvatar();
   document.addEventListener("astro:after-swap", setAvatar);
