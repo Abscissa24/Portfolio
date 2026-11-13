@@ -23,8 +23,8 @@ const { imageSrc, imageAlt, altImageSrc } = Astro.props;
         loading="eager"
         decoding="sync"
         fetchpriority="high"
-        data-avatar-0={imageSrc}
-        data-avatar-1={altImageSrc}
+        data-avatar0={imageSrc}
+        data-avatar1={altImageSrc}
         class="h-full w-full rounded-full object-contain"
       />
     </div>
@@ -62,8 +62,8 @@ const { imageSrc, imageAlt, altImageSrc } = Astro.props;
   function setAvatar() {
     const img = document.getElementById("avatar-img");
     if (!img) return;
-    const a = img.dataset.avatar0;
-    const b = img.dataset.avatar1;
+    const a = img.getAttribute("data-avatar0");
+    const b = img.getAttribute("data-avatar1");
     if (!a) return;
     img.src = b && Math.random() < 0.5 ? b : a;
   }
