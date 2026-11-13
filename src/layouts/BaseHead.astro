@@ -1,6 +1,6 @@
 ---
 import { ClientRouter } from "astro:transitions";
-import { AVATAR_URL, SITE } from "@/consts";
+import { AVATAR_URL, AVATAR_ALT_URL, SITE } from "@/consts";
 import { basics, education, awards } from "@cv";
 
 interface Props {
@@ -150,6 +150,7 @@ const previewImage = new URL(
      already warm in cache if you arrive at Home by navigating there
      from About/Projects rather than landing on it directly. -->
 <link rel="preload" href={AVATAR_URL} as="image" fetchpriority="high" />
+<link rel="preload" href={AVATAR_ALT_URL} as="image" fetchpriority="high" />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />

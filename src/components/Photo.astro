@@ -1,21 +1,11 @@
 ---
-// Was previously a "use client" React component hydrated with
-// client:load, but it has no state, no event handlers, and no
-// interactivity at all - just a static <img> plus an SVG ring animated
-// entirely in CSS (see .avatar-ring-rotate/.avatar-ring-dash in
-// global.css). Shipping it as a React island meant the browser had to
-// download and execute react + react-dom to hydrate markup that never
-// changes, right in the same window where nav clicks are most likely
-// (immediately after landing on the page). As a plain .astro
-// component it renders straight to static HTML with zero client JS,
-// so there's nothing competing with the main thread for a nav click to
-// wait behind.
 interface Props {
   imageSrc: string;
   imageAlt: string;
+  altImageSrc?: string;
 }
 
-const { imageSrc, imageAlt } = Astro.props;
+const { imageSrc, imageAlt, altImageSrc } = Astro.props;
 ---
 
 <div class="relative h-full w-full">
@@ -25,6 +15,7 @@ const { imageSrc, imageAlt } = Astro.props;
       class="absolute h-[298px] w-[298px] p-10 mix-blend-lighten xl:h-[498px] xl:w-[498px]"
     >
       <img
+        id="avatar-img"
         src={imageSrc}
         alt={imageAlt}
         width="1000"
@@ -32,12 +23,16 @@ const { imageSrc, imageAlt } = Astro.props;
         loading="eager"
         decoding="sync"
         fetchpriority="high"
+        data-avatar-0={imageSrc}
+        data-avatar-1={altImageSrc}
         class="h-full w-full rounded-full object-contain"
       />
     </div>
 
-    {/* Circle - see .avatar-ring-rotate/.avatar-ring-dash in
-        global.css for the actual keyframe animations. */}
+    {
+      /* Circle - see .avatar-ring-rotate/.avatar-ring-dash in
+        global.css for the actual keyframe animations. */
+    }
     <svg
       class="h-[300px] w-[300px] xl:h-[506px] xl:w-[506px]"
       fill="transparent"
@@ -53,9 +48,37 @@ const { imageSrc, imageAlt } = Astro.props;
           stroke="currentColor"
           stroke-width="4"
           stroke-linecap="round"
-          stroke-linejoin="round"
-        />
+          stroke-linejoin="round"></circle>
       </g>
     </svg>
   </div>
 </div>
+
+<script is:inline>
+  // Alternate between the two profile avatars on each visit: read the
+  // persisted index, show that avatar, then flip it so the next visit
+  // shows the other one. Falls back to the primary avatar if storage
+  // is unavailable.
+  function setAvatar() {
+    const img = document.getElementById("avatar-img");
+    if (!img) return;
+    const a = img.dataset.avatar0;
+    const b = img.dataset.avatar1;
+    if (!a || !b) return;
+    let idx = 0;
+    try {
+      const stored = localStorage.getItem("avatarIndex");
+      if (stored === "1") idx = 1;
+    } catch (e) {
+      idx = 0;
+    }
+    img.src = idx === 0 ? a : b;
+    try {
+      localStorage.setItem("avatarIndex", idx === 0 ? "1" : "0");
+    } catch (e) {
+      /* storage is best-effort */
+    }
+  }
+  setAvatar();
+  document.addEventListener("astro:after-swap", setAvatar);
+</script>

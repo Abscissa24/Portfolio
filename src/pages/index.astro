@@ -2,7 +2,7 @@
 import Button from "@/components/Button.astro";
 import Photo from "@/components/Photo.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { AVATAR_URL } from "@/consts";
+import { AVATAR_URL, AVATAR_ALT_URL } from "@/consts";
 import { basics } from "@cv";
 const { name, label, summary, socials, location } = basics;
 
@@ -47,7 +47,7 @@ const homeDescription = `${name} — ${label}`;
           </div>
           <!-- Photo Section -->
           <div class="order-1 mb-8 xl:order-none xl:mb-0">
-            <Photo imageSrc={AVATAR_URL} imageAlt={name} />
+            <Photo imageSrc={AVATAR_URL} imageAlt={name} altImageSrc={AVATAR_ALT_URL} />
           </div>
         </div>
       </div>
