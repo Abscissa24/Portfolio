@@ -37,6 +37,7 @@ export default {
     // swap use the same pattern ThemeToggle already does for sun/moon.
     plugin(function ({ addVariant }) {
       addVariant("rm", "html.reduce-motion &");
+      addVariant("listening", "html.listening &");
     }),
   ],
 };

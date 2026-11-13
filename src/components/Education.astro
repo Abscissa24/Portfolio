@@ -8,9 +8,11 @@ import { education } from "@cv";
     {
       education.map(
         ({ institution, startDate, endDate, area, url, summary }) => {
-          const startYear = new Date(startDate).getFullYear();
+          const startYear = startDate
+            ? new Date(startDate).getFullYear()
+            : null;
           const endYear = endDate ? new Date(endDate).getFullYear() : "Present";
-          const years = `${startYear} - ${endYear}`;
+          const years = startYear ? `${startYear} - ${endYear}` : `${endYear}`;
 
           return (
             <li class="flex flex-col md:flex-row md:items-baseline">

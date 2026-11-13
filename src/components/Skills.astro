@@ -17,19 +17,19 @@ const {
 } = skills;
 
 const skillCategories = [
-  { title: "Operating Systems", items: operating_systems },
-  { title: "Languages", items: languages },
-  { title: "Frameworks", items: frameworks },
-  { title: "Databases", items: databases },
-  { title: "Cloud", items: cloud },
-  { title: "Networking", items: networking },
-  { title: "Virtualization", items: virtualization },
-  { title: "Security", items: security },
-  { title: "Tools", items: tools },
-  { title: "Technical & Analytical", items: technical },
-  { title: "Leadership & Management", items: leadership },
-  { title: "Soft Skills", items: soft },
-];
+  { title: "Operating Systems", items: operating_systems ?? [] },
+  { title: "Languages", items: languages ?? [] },
+  { title: "Frameworks", items: frameworks ?? [] },
+  { title: "Databases", items: databases ?? [] },
+  { title: "Cloud", items: cloud ?? [] },
+  { title: "Networking", items: networking ?? [] },
+  { title: "Virtualization", items: virtualization ?? [] },
+  { title: "Security", items: security ?? [] },
+  { title: "Tools", items: tools ?? [] },
+  { title: "Technical & Analytical", items: technical ?? [] },
+  { title: "Leadership & Management", items: leadership ?? [] },
+  { title: "Soft Skills", items: soft ?? [] },
+].filter(({ items }) => items.length > 0);
 ---
 
 <Section className={Astro.props.className} title="Skills">

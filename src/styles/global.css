@@ -326,3 +326,25 @@ html.reduce-motion .avatar-ring-rotate,
 html.reduce-motion .avatar-ring-dash {
   animation-play-state: paused;
 }
+
+/* Listen mode: readable blocks become clickable targets while
+   html.listening is set. The active utterance gets a high-contrast
+   outline that works in both light and dark themes. */
+html.listening main h1,
+html.listening main h2,
+html.listening main h3,
+html.listening main p,
+html.listening main li {
+  cursor: pointer;
+}
+
+html.listening main [data-listen-active="true"] {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  border-radius: 4px;
+  background-color: rgb(0 0 0 / 0.06);
+}
+
+html.dark.listening main [data-listen-active="true"] {
+  background-color: rgb(255 255 255 / 0.08);
+}

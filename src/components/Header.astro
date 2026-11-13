@@ -1,5 +1,6 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
+import ListenToggle from "./ListenToggle.astro";
 import ReducedMotionToggle from "./ReducedMotionToggle.astro";
 import { Icon } from "astro-icon/components";
 import { SITE, LINKS } from "@/consts";
@@ -47,6 +48,7 @@ import { SITE, LINKS } from "@/consts";
         >
           <Icon name="github" class="block size-full" />
         </a>
+        <ListenToggle id="headerListenToggle" />
         <ThemeToggle id="headerThemeToggle" />
         <ReducedMotionToggle id="headerReducedMotionToggle" />
       </div>

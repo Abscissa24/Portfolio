@@ -3,16 +3,24 @@ import Heading from "@/components/Heading.astro";
 import Education from "@/components/Education.astro";
 import Experience from "@/components/Experience.astro";
 import Skills from "@/components/Skills.astro";
+import Certificates from "@/components/Certificates.astro";
+import Awards from "@/components/Awards.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { SITE } from "@/consts";
+import { basics, certificates, awards } from "@cv";
+
+// Sections are only mounted when the CV actually has entries, so an empty
+// array (or a missing key) never leaves a bare heading with nothing under it.
+const aboutDescription = `Education, experience, and skills of ${basics.name} — ${basics.label}`;
 ---
 
-<BaseLayout title="About" description={SITE.DESCRIPTION}>
+<BaseLayout title="About" description={aboutDescription}>
   <div class="container mx-auto my-24 xl:my-5">
     <Heading title="About Me" />
     <div class="space-y-8 md:col-span-4">
       <Experience class="order-last" />
       <Education class="order-first" />
+      {certificates && certificates.length > 0 && <Certificates />}
+      {awards.length > 0 && <Awards />}
       <Skills />
     </div>
   </div>

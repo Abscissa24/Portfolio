@@ -2,12 +2,14 @@
 import Button from "@/components/Button.astro";
 import Photo from "@/components/Photo.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { SITE, AVATAR_URL } from "@/consts";
+import { AVATAR_URL } from "@/consts";
 import { basics } from "@cv";
-const { name, label, summary, socials } = basics;
+const { name, label, summary, socials, location } = basics;
+
+const homeDescription = `${name} — ${label}`;
 ---
 
-<BaseLayout title="Home" description={SITE.DESCRIPTION}>
+<BaseLayout title="Home" description={homeDescription}>
   <section class="h-full">
     <div class="flex h-full items-center justify-center">
       <div class="container mx-auto my-24 xl:my-0">
@@ -24,6 +26,9 @@ const { name, label, summary, socials } = basics;
               </p>
               <p class="text-black/80 dark:text-white/80">
                 {summary}
+              </p>
+              <p class="text-sm text-black/50 dark:text-white/50">
+                {location.city}, {location.region}
               </p>
             </div>
             <div

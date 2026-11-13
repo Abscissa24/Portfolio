@@ -8,6 +8,14 @@ import type { Cv } from "@/types";
 // data - the shape is pinned by the Cv interface in @/types.
 const cv = rawCv as Cv;
 
-export const { basics, work, education, awards, skills, projects } = cv;
+export const {
+  basics,
+  work,
+  education,
+  certificates,
+  awards,
+  skills,
+  projects,
+} = cv;
 
 export default cv;

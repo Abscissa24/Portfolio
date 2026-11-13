@@ -48,7 +48,8 @@ export interface EducationItem {
   url: string | null;
   area: string;
   studyType: string;
-  startDate: string;
+  // Nullable: an in-progress qualification has no start date on record yet.
+  startDate: string | null;
   endDate: string | null;
   summary?: string | string[] | null;
 }
@@ -59,33 +60,47 @@ export interface Award {
   awarder: string;
 }
 
+export interface Certificate {
+  name: string;
+  issuer: string;
+  date: string;
+  number?: string;
+  grade?: string;
+  points?: string;
+  expires?: string;
+}
+
+// Every category is optional so a CV that omits one (or all) of them
+// still type-checks, and Skills.astro can filter out the empty ones.
 export interface Skills {
-  operating_systems: string[];
-  languages: string[];
-  cloud: string[];
-  networking: string[];
-  frameworks: string[];
-  databases: string[];
-  tools: string[];
-  virtualization: string[];
-  security: string[];
-  technical: string[];
-  leadership: string[];
-  soft: string[];
+  operating_systems?: string[];
+  languages?: string[];
+  cloud?: string[];
+  networking?: string[];
+  frameworks?: string[];
+  databases?: string[];
+  tools?: string[];
+  virtualization?: string[];
+  security?: string[];
+  technical?: string[];
+  leadership?: string[];
+  soft?: string[];
 }
 
 export interface Project {
   name: string;
   description: string;
-  url: string;
+  // Optional: some projects (e.g. private/unpublished work) have no link.
+  url?: string;
   highlights: string[];
-  technologies: string[];
+  technologies?: string[];
 }
 
 export interface Cv {
   basics: Basics;
   work: WorkItem[];
   education: EducationItem[];
+  certificates?: Certificate[];
   awards: Award[];
   skills: Skills;
   projects: Project[];
